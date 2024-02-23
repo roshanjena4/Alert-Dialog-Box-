@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,14 +21,11 @@ public class MainActivity extends AppCompatActivity {
 
     AlertDialog altNew;
     AlertDialog.Builder extDialog,accDialog;
-    Button btn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        btn = findViewById(R.id.btn);
-        registerForContextMenu(btn);
 
 
 //        For Alert Dialog box all required properties
@@ -43,8 +41,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
 //        For account dialog
+        accDialog = new AlertDialog.Builder(this);
         accDialog.setTitle("Accounts");
         accDialog.setIcon(R.drawable.baseline_account_circle_24);
         accDialog.setMessage("DO you want to create new account");
@@ -60,6 +58,13 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Not Created", Toast.LENGTH_SHORT).show();
             }
         });
+        accDialog.setNeutralButton("cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(MainActivity.this, "Canceled", Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
 //        for exit dialog
         extDialog = new AlertDialog.Builder(this);
@@ -87,6 +92,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+//      On back pressed
+
+
 
     }
 
@@ -106,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else if (i == R.id.account)
         {
-                accDialog.show();
+            accDialog.show();
         }
         else
         {
@@ -114,4 +122,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 }
